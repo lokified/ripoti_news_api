@@ -3,7 +3,7 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 
 const app = express();
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -15,12 +15,9 @@ app.get("/", (req, res) => {
 const news = [];
 
 app.get("/accident-news", (req, res) => {
-    news.length = 0
-  let page = 0;
 
-  for (let i = 0; i < 10; i++) {
-    getNews(page);
-    page += i;
+  for (let i = 1; i < 10; i++) {
+    getNews(i);
   }
 
   setTimeout(() => {
@@ -30,7 +27,7 @@ app.get("/accident-news", (req, res) => {
 
 const getNews = async (page) => {
   const response = await axios.get(
-    `https://nation.africa/service/search/kenya/290754?pageNum=${page}&query=accidents&sortByDate=true&channelId=516`
+    `https://nation.africa/service/search/kenya/290754?pageNum=${page}&channelId=&query=accidents&sortByDate=true`
   );
 
   const html = response.data;
